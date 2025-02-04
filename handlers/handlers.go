@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"youtube-download/video"
 )
 
 // Definição dos formatos suportados como um tipo personalizado
@@ -65,6 +66,8 @@ func POST(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, "Parâmetro 'url' é obrigatório.", http.StatusBadRequest)
 		return
 	}
+
+	video.HandlerDownloadUrl(data.Url, video.MP4)
 
 	// Exemplo de resposta
 	fmt.Fprintf(w, "Formato válido: %s\nURL do YouTube: %s\n", data.Format, data.Url)

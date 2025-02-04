@@ -16,7 +16,7 @@ const (
 	WEBM Format = "webm"
 )
 
-func handlerDownloadUrl(url string, videoFormat Format) {
+func HandlerDownloadUrl(url string, videoFormat Format) *error {
 	outputFileName := "video.mp4"
 	// convertedFileName := "video_convertido." + videoFormat
 
@@ -24,13 +24,13 @@ func handlerDownloadUrl(url string, videoFormat Format) {
 	video, err := client.GetVideo(url)
 	if err != nil {
 		fmt.Println("Erro ao obter o vídeo:", err)
-		return
+		return nil
 	}
 
 	formats := video.Formats.WithAudioChannels()
 	if len(formats) == 0 {
 		fmt.Println("Nenhum formato com áudio disponível.")
-		return
+		return nil
 	}
 
 	format := formats[0]
@@ -38,20 +38,20 @@ func handlerDownloadUrl(url string, videoFormat Format) {
 	stream, _, err := client.GetStream(video, &format)
 	if err != nil {
 		fmt.Println("Erro ao obter o stream do vídeo:", err)
-		return
+		return nil
 	}
 
 	file, err := os.Create(outputFileName)
 	if err != nil {
 		fmt.Println("Erro ao criar o arquivo:", err)
-		return
+		return nil
 	}
 	defer file.Close()
 
 	_, err = file.ReadFrom(stream)
 	if err != nil {
 		fmt.Println("Erro ao salvar o vídeo:", err)
-		return
+		return err
 	}
 
 	// Converter o vídeo para outro formato

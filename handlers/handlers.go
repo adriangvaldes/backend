@@ -33,7 +33,7 @@ func isValidFormat(format Format) bool {
 	}
 }
 
-func HandleDownloadUrl(w http.ResponseWriter, req *http.Request) {
+func POST(w http.ResponseWriter, req *http.Request) {
 	if req.Method != http.MethodPost { // Alterei para POST por ser mais adequado
 		http.Error(w, "Método não permitido. Utilize POST.", http.StatusMethodNotAllowed)
 		return

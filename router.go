@@ -12,7 +12,7 @@ func SetupRoutes() *mux.Router {
 	router := mux.NewRouter()
 
 	// Define rotas separadas por método
-	router.HandleFunc("/", handlers.HandleDownloadUrl).Methods(http.MethodPost)
+	router.HandleFunc("/", handlers.POST).Methods(http.MethodPost)
 	router.HandleFunc("/health", handlers.HandleHealthCheck).Methods(http.MethodGet)
 
 	return router
